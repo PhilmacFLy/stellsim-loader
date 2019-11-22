@@ -25,9 +25,11 @@ func main() {
 			log.Fatal(err)
 		}
 		defer resp.Body.Close()
-		_, err = io.Copy(out, resp.Body)
-		if err != nil {
-			log.Fatal(err)
+		if resp.StatusCode < 300 {
+			_, err = io.Copy(out, resp.Body)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
